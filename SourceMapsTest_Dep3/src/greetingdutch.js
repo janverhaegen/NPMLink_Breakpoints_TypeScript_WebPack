@@ -1,3 +1,3 @@
-exports.sayHelloDutch = function() {
+export function sayHelloDutch() {
     return 'Hallo!';
 }

@@ -1,7 +1,7 @@
-var greetFrench = require('./greetingfrench')
-var greetDutch = require('./greetingdutch')
+import {sayHelloFrench}  from './greetingfrench.js'
+import {sayHelloDutch}  from './greetingdutch.js'
 
-exports.sayHello = function() {
-    return "FR: " + greetFrench.sayHelloFrench() +
-       "  --  NL: " + greetDutch.sayHelloDutch();
+export function sayHello() {
+    return "FR: " + sayHelloFrench() +
+       "  --  NL: " + sayHelloDutch();
 }
