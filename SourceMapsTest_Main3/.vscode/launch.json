@@ -11,9 +11,12 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\src\\index.js",
-            "runtimeArgs": ["--preserve-symlinks"],
-            "trace": true
+            "program": "${workspaceFolder}\\dist\\index.js",
+            "runtimeArgs": ["--preserve-symlinks", "--nolazy"],
+            //"trace": true,  
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
         }
-    ]
+   ]
 }

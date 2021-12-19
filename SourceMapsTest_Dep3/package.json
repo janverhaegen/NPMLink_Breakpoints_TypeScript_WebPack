@@ -2,11 +2,14 @@
   "name": "sourcemapstest_dep3",
   "version": "1.0.0",
   "description": "",
-  "main": "src/mygreetings.js",
-  "type": "module",
+  "main": "dist/mygreetings.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "author": "Jan Verhaegen",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
 }
