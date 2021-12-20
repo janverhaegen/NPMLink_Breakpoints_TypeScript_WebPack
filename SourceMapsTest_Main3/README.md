@@ -1,7 +1,10 @@
 # Purpose
 
-The project in this repository demonstrates how to debug in VSCode, with breakpoints as well in the main program as in a local dependency linked in with "nmp link".  
-The initial commit uses JavaScript.  The last commit uses TypeScript.
+The project in this repository demonstrates how to debug in VSCode using step throught, breakpoints, and F12,  
+as well in the main program as in a local dependency which is linked in with "nmp link".  
+
+The initial commit uses JavaScript.  
+The last commit uses TypeScript for both the main app as the dependency, while the dependency is bundled with WebPack.
   
 # Setup
 
@@ -15,7 +18,9 @@ Tested on:
 
 ## Use
 
-Open "sourcemapstest_main3" and "sourcemapstest_dep3" each in a separate instance of VSCODE.
+Clone this repository to your local disk.  It includes the main app and the dependency each in their own subdirectory.
+
+The easiest way is to open "sourcemapstest_main3" and "sourcemapstest_dep3" each in a separate instance of VSCODE.
 
 In the terminal of "sourcemapstest_dep3" run:
 1. `npm ci`
@@ -26,7 +31,7 @@ In the terminal of "sourcemapstest_main3" run:
 1. `npm ci`
 2. `npm link "sourcemapstest_dep3"`
 3. `npm run build`
-4. check whether the app runs with: `npm start  ` 
+4. check whether the app runs with: `npm start` 
     It works fine if it outputs to the terminal without errors:
     ```
     FR: Bonjour!  --  NL: Hallo!
@@ -35,9 +40,9 @@ In the terminal of "sourcemapstest_main3" run:
 5. set breakpoints in the .ts files ***via the VSCode instance of "sourcemapstest_main3"***:
     - for the main project via the code in the ./src directory
     - for the dependency project via the code in ./node_modules/sourcemapstest_dep3/src
-6. run the debugger (F5) using launch.json.   
+6. run the debugger (F5) using the configuration in launch.json.   
 
-Warning: every subsequent `npm install ....` may destroy the symlink.  So you might have to redo the symlink.
+Warning: every subsequent `npm install ....` may destroy the symlink.  So you might have to re-setup the symlink.
 
 # BREAKPOINTS
 
@@ -122,6 +127,45 @@ npm unlink "package name of the dependency>"
 In the terminal in the base directory of the dependency, run:
 ```
 nmp unlink -g
+```
+
+# WEBPACK
+
+## Compatibility with NPM Link
+
+The paths to the source files, in the sourcemaps created by webpack, are not compatible with NPM Link.  
+They look like `webpack://sourcemapstest_dep3/./src/greetingdutch.ts`  
+while the use of NPM Link requires paths relative to the location of the sourcemap, e.g.: `../src/greetingdutch.ts`
+
+This can be solved by adding the `devtoolModuleFilenameTemplate` parameter to the output section of the webpack.config.js file:
+```
+output: {
+    libraryTarget: "commonjs",
+    path: path.resolve(__dirname, "./dist"),
+    filename: "bundle.js",        
+    devtoolModuleFilenameTemplate: function (info) {
+        return "..\\" + path.relative(__dirname, info.absoluteResourcePath);
+    },
+},
+```
+
+## Diagnostics
+
+The anonymous function in the webpack.config.js file can easily be debugged with the VSCode-debugger, just as any other javascript file.  
+Adding the following launch.json file to the dependency project, allows to step through it with the debugger and set breakpoints:
+
+```
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Webpack",
+            "program": "${workspaceFolder}/node_modules/webpack/bin/webpack.js"
+        }
+    ]
+}
 ```
 
 ---
