@@ -90,7 +90,7 @@ npm link
 
 ## Create symlink on the main side
 
-In the terminal in the base directory of the main app run:
+In the terminal in the base directory of the main app, run:
 ```
 npm link "<package name of the dependency>"
 // The package name is the value of the name entry in package.json.
@@ -111,14 +111,14 @@ has to be added to the configuration section in the launch.json file, if you use
 
 You can verify the existance of symlinks by visiting the following link in Windows Explorer: 
 ```
-C:\Users\Jan\AppData\Roaming\npm\node_modules
+%appdata%\npm\node_modules
 ```
 
 ## Remove symlink on the main side
 
-In the terminal in the base directory of the main app run:
+In the terminal in the base directory of the main app, run:
 ```
-npm unlink "package name of the dependency>"
+npm unlink "<package name of the dependency>"
 // The package name is the value of the name entry in package.json.
 ```
 
