@@ -21,7 +21,7 @@ module.exports = {
         path: path.resolve(__dirname, "./dist"),
         filename: "bundle.js",        
         devtoolModuleFilenameTemplate: function (info) {
-            return "..\\" + path.relative(__dirname, info.absoluteResourcePath);
+            return path.relative(path.resolve(__dirname, './dist'), info.absoluteResourcePath);
         },
     },
 };

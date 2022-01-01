@@ -144,7 +144,7 @@ output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "bundle.js",        
     devtoolModuleFilenameTemplate: function (info) {
-        return "..\\" + path.relative(__dirname, info.absoluteResourcePath);
+        return path.relative(path.resolve(__dirname, './dist'), info.absoluteResourcePath);
     },
 },
 ```
@@ -199,7 +199,7 @@ devtool: 'source-map',
 // which VSCode does not seem to understand. (ADAPT)
 output: {
     devtoolModuleFilenameTemplate: function (info) {
-        return "..\\" + path.relative(__dirname, info.absoluteResourcePath);
+        return path.relative(path.resolve(__dirname, './dist'), info.absoluteResourcePath);
     },
 }
 ``` 
